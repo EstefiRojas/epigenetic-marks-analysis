@@ -12,7 +12,7 @@ data_lncrna <- read.csv(lncrna_file, header=TRUE, sep = "\t")
 # Calculate basic statistics
 summary(data_lncrna$AvgSignal)
 # Statistics split by 'Functional' category
-by(data_lncrna$AvgSignal, data_lncrna$Functional, summary) 
+by(lncrna_file1$AvgSignal, data_lncrna$Functional, summary) 
 
 # Split data by 'Functional' for t-test
 negative_control <- data_lncrna[data_lncrna$Functional == "No", "AvgSignal"]
@@ -132,9 +132,10 @@ boot.ci(boot_prot_ci_results, type = "perc") # Use percentile-based confidence i
 boot.ci(boot_lncrna_ci_results, type = "perc") # Use percentile-based confidence intervals 
 boot.ci(boot_shortncrna_ci_results, type = "perc") # Use percentile-based confidence intervals 
 
-correlation_matrix_combined[1,3]
 
-df <- data.frame(sequence_type = c("lncRNA Exons", "Short ncRNAs", "Protein-coding Exons"),
+
+# Create a graph to visualice features
+df <- data.frame(sequence_type = c("lncRNA Exons","Short ncRNAs","Protein-coding Exons"),
                  correlation = c(correlation_list[[lncrna_file1]][1,3], 
                                  correlation_list[[sncrna_file1]][1,3], 
                                  correlation_list[[protein_file1]][1,3],
@@ -157,7 +158,15 @@ df <- data.frame(sequence_type = c("lncRNA Exons", "Short ncRNAs", "Protein-codi
                                  
                                  correlation_list[[lncrna_file6]][1,3], 
                                  correlation_list[[sncrna_file6]][1,3], 
-                                 correlation_list[[protein_file6]][1,3]),
+                                 correlation_list[[protein_file6]][1,3],
+                                 
+                                 correlation_list[[lncrna_file7]][1,3], 
+                                 correlation_list[[sncrna_file7]][1,3], 
+                                 correlation_list[[protein_file7]][1,3],
+
+                                 correlation_list[[lncrna_file8]][1,3], 
+                                 correlation_list[[sncrna_file8]][1,3], 
+                                 correlation_list[[protein_file8]][1,3]),
                  
                  lower_ci = c(correlation_list[[lncrna_file1]][2,3], 
                               correlation_list[[sncrna_file1]][2,3], 
@@ -181,7 +190,15 @@ df <- data.frame(sequence_type = c("lncRNA Exons", "Short ncRNAs", "Protein-codi
                               
                               correlation_list[[lncrna_file6]][2,3], 
                               correlation_list[[sncrna_file6]][2,3], 
-                              correlation_list[[protein_file6]][2,3]),
+                              correlation_list[[protein_file6]][2,3],
+                              
+                              correlation_list[[lncrna_file7]][2,3], 
+                              correlation_list[[sncrna_file7]][2,3], 
+                              correlation_list[[protein_file7]][2,3],
+
+                              correlation_list[[lncrna_file8]][2,3], 
+                              correlation_list[[sncrna_file8]][2,3], 
+                              correlation_list[[protein_file8]][2,3]),
                  
                  upper_ci = c(correlation_list[[lncrna_file1]][3,3], 
                               correlation_list[[sncrna_file1]][3,3], 
@@ -205,30 +222,40 @@ df <- data.frame(sequence_type = c("lncRNA Exons", "Short ncRNAs", "Protein-codi
                               
                               correlation_list[[lncrna_file6]][3,3], 
                               correlation_list[[sncrna_file6]][3,3], 
-                              correlation_list[[protein_file6]][3,3]),
+                              correlation_list[[protein_file6]][3,3],
+                              
+                              correlation_list[[lncrna_file7]][3,3], 
+                              correlation_list[[sncrna_file7]][3,3], 
+                              correlation_list[[protein_file7]][3,3],
+
+                              correlation_list[[lncrna_file8]][3,3], 
+                              correlation_list[[sncrna_file8]][3,3], 
+                              correlation_list[[protein_file8]][3,3]),
                  feature_type = c("H3k36me3", "H3k36me3", "H3k36me3",
                                   "H3k27ac", "H3k27ac", "H3k27ac",
                                   "H3k4me3", "H3k4me3", "H3k4me3",
                                   "H3k9me3", "H3k9me3", "H3k9me3",
                                   "H3k4me1", "H3k4me1", "H3k4me1",
-                                  "H3k27me3", "H3k27me3", "H3k27me3"))
+                                  "H3k27me3", "H3k27me3", "H3k27me3",
+                                  "Chromatin Accesibility","Chromatin Accesibility","Chromatin Accesibility",
+                                  "Methylome","Methylome","Methylome"))
 
 # Create a factor with the correct order for the x-axis
 df$feature_name <- factor(df$sequence_type, levels = unique(df$sequence_type))
 
 # Create a factor for sequence_type with the correct order for shapes
 df$sequence_type <- factor(df$sequence_type, 
-                           levels = c("lncRNA Exons", "Short ncRNAs", "Protein-coding Exons"))
+                           levels = c("lncRNA Exons","Short ncRNAs","Protein-coding Exons"))
 
 # Create a factor for feature_type with the correct order for colors
 df$feature_type <- factor(df$feature_type, 
-                          levels = c("H3k36me3", "H3k27ac","H3k4me3", "H3k9me3","H3k4me1", "H3k27me3"))
+                          levels = c("H3k36me3", "H3k27ac","H3k4me3", "H3k9me3","H3k4me1", "H3k27me3","Chromatin Accesibility","Methylome"))
 
-ggplot(df, aes(x = feature_name, y = correlation, color = feature_type, shape = sequence_type)) +
+ggplot(df, aes(x = feature_type, y = correlation, color = feature_type, shape = sequence_type)) +
   geom_point(size = 3, position = position_dodge(width = 0.5)) +
   geom_errorbar(aes(ymin = lower_ci, ymax = upper_ci), width = 0.05, position = position_dodge(width = 0.5)) +
-  scale_shape_manual(values = c(17, 18, 15)) +  
-  scale_color_manual(values = c("blue","green","pink","orange","brown","purple")) +  
+  scale_shape_manual(values = c(19, 17, 15)) +  #c(19, 17, 15))
+  scale_color_manual(values = c("blue","green","pink","orange","brown","purple","red","yellow")) +  
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),  # Rotate x-axis labels
         legend.position = "right") +
@@ -418,6 +445,46 @@ correlation_list[[sncrna_file6]] <- spearman_correlation(sncrna_file6)
 correlation_list[[protein_file6]] <- spearman_correlation(protein_file6)
 #correlation_matrix_combined <- do.call(rbind, correlation_list)
 
+#chromatin accessibility
+lncrna_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_lncrna_matrix.csv"
+#output_file <- "../data/histone_feature/lncrna_spearman_matrix.csv"
+
+sncrna_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_short_ncrna_matrix.csv"
+#output_file <- "../data/histone_feature/protein_spearman_matrix.csv"
+
+protein_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_protein_matrix.csv"
+#output_file <- "../data/histone_feature/short_ncrna_spearman_matrix.csv"
+
+
+correlation_list[[lncrna_file7]] <- spearman_correlation(lncrna_file7)
+#correlation_matrix_combined <- do.call(rbind, correlation_list)
+
+correlation_list[[sncrna_file7]] <- spearman_correlation(sncrna_file7)
+#correlation_matrix_combined <- do.call(rbind, correlation_list)
+
+correlation_list[[protein_file7]] <- spearman_correlation(protein_file7)
+#correlation_matrix_combined <- do.call(rbind, correlation_list)
+
+
+#methylome
+lncrna_file8 <- "../data/histone_feature/methylation_marks/methylation_marks_lncrna_matrix.csv"
+#output_file <- "../data/histone_feature/lncrna_spearman_matrix.csv"
+
+sncrna_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_short_ncrna_matrix.csv"
+#output_file <- "../data/histone_feature/protein_spearman_matrix.csv"
+
+protein_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_protein_matrix.csv"
+#output_file <- "../data/histone_feature/short_ncrna_spearman_matrix.csv"
+
+
+correlation_list[[lncrna_file7]] <- spearman_correlation(lncrna_file7)
+#correlation_matrix_combined <- do.call(rbind, correlation_list)
+
+correlation_list[[sncrna_file7]] <- spearman_correlation(sncrna_file7)
+#correlation_matrix_combined <- do.call(rbind, correlation_list)
+
+correlation_list[[protein_file7]] <- spearman_correlation(protein_file7)
+#correlation_matrix_combined <- do.call(rbind, correlation_list)
 
 
 
@@ -432,3 +499,11 @@ summary(histone_data$V7)
 
 histone_data <- read.csv("../data/histone_feature/lncrna-histone-feature-matrix.csv", header=TRUE)
 summary(histone_data$AvgSignal)
+
+
+#######################################
+# Statistics for methylation files:
+methyl_file <- "../data/ENCFF913ZNZ.bed"
+methyl_data <- read.csv(methyl_file, header = FALSE, sep = "\t", nrows = 100000)
+summary(methyl_data)
+
