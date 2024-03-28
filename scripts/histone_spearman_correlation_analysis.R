@@ -446,13 +446,13 @@ correlation_list[[protein_file6]] <- spearman_correlation(protein_file6)
 #correlation_matrix_combined <- do.call(rbind, correlation_list)
 
 #chromatin accessibility
-lncrna_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_lncrna_matrix.csv"
+lncrna_file7 <- "../data/chrm_acc_feature/chrm_acc_lncrna_matrix.csv"
 #output_file <- "../data/histone_feature/lncrna_spearman_matrix.csv"
 
-sncrna_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_short_ncrna_matrix.csv"
+sncrna_file7 <- "../data/chrm_acc_feature/chrm_acc_short_ncrna_matrix.csv"
 #output_file <- "../data/histone_feature/protein_spearman_matrix.csv"
 
-protein_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_protein_matrix.csv"
+protein_file7 <- "../data/chrm_acc_feature/chrm_acc_protein_matrix.csv"
 #output_file <- "../data/histone_feature/short_ncrna_spearman_matrix.csv"
 
 
@@ -467,23 +467,23 @@ correlation_list[[protein_file7]] <- spearman_correlation(protein_file7)
 
 
 #methylome
-lncrna_file8 <- "../data/histone_feature/methylation_marks/methylation_marks_lncrna_matrix.csv"
+lncrna_file8 <- "../data/methylome_feature/lncrna_matrix.csv"
 #output_file <- "../data/histone_feature/lncrna_spearman_matrix.csv"
 
-sncrna_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_short_ncrna_matrix.csv"
+sncrna_file8 <- "../data/methylome_feature/short_ncrna_matrix.csv"
 #output_file <- "../data/histone_feature/protein_spearman_matrix.csv"
 
-protein_file7 <- "../data/histone_feature/methylation_marks/methylation_marks_protein_matrix.csv"
+protein_file8 <- "../data/methylome_feature/protein_matrix.csv"
 #output_file <- "../data/histone_feature/short_ncrna_spearman_matrix.csv"
 
 
-correlation_list[[lncrna_file7]] <- spearman_correlation(lncrna_file7)
+correlation_list[[lncrna_file8]] <- spearman_correlation(lncrna_file8)
 #correlation_matrix_combined <- do.call(rbind, correlation_list)
 
-correlation_list[[sncrna_file7]] <- spearman_correlation(sncrna_file7)
+correlation_list[[sncrna_file8]] <- spearman_correlation(sncrna_file8)
 #correlation_matrix_combined <- do.call(rbind, correlation_list)
 
-correlation_list[[protein_file7]] <- spearman_correlation(protein_file7)
+correlation_list[[protein_file8]] <- spearman_correlation(protein_file8)
 #correlation_matrix_combined <- do.call(rbind, correlation_list)
 
 

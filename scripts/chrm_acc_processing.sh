@@ -72,7 +72,7 @@ awk -F '\t' 'NR==FNR { seen[$1,$2,$3]=$4; next }
              "$OUTPUT_NAME".bed "$sorted_regions_file_bed" > "$augmented_regions_bed"
 
 # Add header row
-echo Chromosome$'\t'Start$'\t'End$'\t'ID$'\t'Functional$'\t'AvgSignal > "$data_path"/chrm_acc_"$OUTPUT_NAME".csv
+echo Chromosome'\t'Start'\t'End'\t'ID'\t'Functional'\t'AvgSignal > "$data_path"/chrm_acc_"$OUTPUT_NAME".csv
 
 # Convert BEDTools output to desired CSV format
 awk -F '\t' '{print $0}' OFS=, "$augmented_regions_bed" >> "$data_path"/chrm_acc_"$OUTPUT_NAME".csv

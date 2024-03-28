@@ -21,8 +21,8 @@ data_path=../data/methylome_feature
 beds_path=../data/methylome_beds
 
 # Create a directory if not present already
-if [ ! -d "$data_path" ]; then
-    mkdir "$data_path"
+if [ ! -d "$data_path"/sorted_beds/ ]; then
+    mkdir -p "$data_path"/sorted_beds/
 fi
 
 # Remove header from regions file and sort regions
@@ -41,6 +41,7 @@ for file in "$beds_path"/*.bed; do
     bedtools intersect -a "$data_path"/sorted_beds/"$filename"_sorted.bed -b "$sorted_regions_file_bed" -wa -wb >> overlaps_"$OUTPUT_NAME".bed
 done
 
+# Group hits by chromosome, start, and end of reads to obtain average methilation percentage
 awk -F '\t' '
     BEGIN { OFS="\t" }
     {
@@ -71,5 +72,5 @@ awk -F '\t' '{print $0}' OFS=, "$augmented_regions_bed" >> "$data_path"/"$OUTPUT
 # Remove the temporary files
 rm "$sorted_regions_file_bed"
 rm "$augmented_regions_bed"
-#rm "$OUTPUT_NAME".bed
+rm "$OUTPUT_NAME".bed
 

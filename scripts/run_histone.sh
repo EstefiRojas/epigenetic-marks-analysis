@@ -15,10 +15,10 @@ HISTONE_NAME=$1
 # LONG NCRNA
 ## Process histone marks for exon1
 sh histone_processing.sh ../data/functional-lncrna-exon1-dataset.csv "$HISTONE_NAME" lncrna-exon1-histone-feature
-sh histone_processing.sh ../data/lncrna-exon1-negative-control-dataset.csv "$HISTONE_NAME" lncrna-exon1-NC-histone-feature
+sh histone_processing.sh ../data/lncrna-exon1-negative-control-dataset-curated.csv "$HISTONE_NAME" lncrna-exon1-NC-histone-feature
 ## Process histone marks for exon2
 sh histone_processing.sh ../data/functional-lncrna-exon2-dataset.csv "$HISTONE_NAME" lncrna-exon2-histone-feature
-sh histone_processing.sh ../data/lncrna-exon2-negative-control-dataset.csv "$HISTONE_NAME" lncrna-exon2-NC-histone-feature
+sh histone_processing.sh ../data/lncrna-exon2-negative-control-dataset-curated.csv "$HISTONE_NAME" lncrna-exon2-NC-histone-feature
 ## Join datasets into one for R script
 sh join_datasets.sh ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_lncrna-exon1-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_lncrna-exon2-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_lncrna_positives_matrix
 sh join_datasets.sh ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_lncrna-exon1-NC-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_lncrna-exon2-NC-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_lncrna_negatives_matrix
@@ -30,7 +30,7 @@ sh histone_processing.sh \
     "$HISTONE_NAME" \
     short-ncrna-histone-feature
 sh histone_processing.sh \
-    ../data/short-ncrna-negative-control-dataset.csv \
+    ../data/short-ncrna-negative-control-dataset-curated.csv \
     "$HISTONE_NAME" \
     short-ncrna-NC-histone-feature
 sh join_datasets.sh \
@@ -40,11 +40,11 @@ sh join_datasets.sh \
 
 
 # PROTEIN CODING
-sh histone_processing.sh ../data/protein-exon2-dataset.csv "$HISTONE_NAME" protein-exon2-histone-feature
-sh histone_processing.sh ../data/protein-exon2-negative-control-dataset.csv "$HISTONE_NAME" protein-exon2-NC-histone-feature
+sh histone_processing.sh ../data/functional-protein-exon2-dataset.csv "$HISTONE_NAME" protein-exon2-histone-feature
+sh histone_processing.sh ../data/protein-exon2-negative-control-dataset-curated.csv "$HISTONE_NAME" protein-exon2-NC-histone-feature
 
-sh histone_processing.sh ../data/protein-exon3-dataset.csv "$HISTONE_NAME" protein-exon3-histone-feature
-sh histone_processing.sh ../data/protein-exon3-negative-control-dataset.csv "$HISTONE_NAME" protein-exon3-NC-histone-feature
+sh histone_processing.sh ../data/functional-protein-exon3-dataset.csv "$HISTONE_NAME" protein-exon3-histone-feature
+sh histone_processing.sh ../data/protein-exon3-negative-control-dataset-curated.csv "$HISTONE_NAME" protein-exon3-NC-histone-feature
 
 sh join_datasets.sh ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_protein-exon2-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_protein-exon3-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_protein_positives_matrix
 sh join_datasets.sh ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_protein-exon2-NC-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_protein-exon3-NC-histone-feature.csv ../data/histone_feature/"$HISTONE_NAME"/"$HISTONE_NAME"_protein_negatives_matrix

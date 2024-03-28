@@ -22,7 +22,7 @@ grep -v "Start" "$dataset1" | awk -F'\t' '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t"
 grep -v "Start" "$dataset2" | awk -F'\t' '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5"\t" $6 }' > "$temp_negative"
 
 # Add header row
-echo Chromosome$'\t'Start$'\t'End$'\t'ID$'\t'Functional$'\t'AvgSignal > "$output".csv
+echo Chromosome'\t'Start'\t'End'\t'ID'\t'Functional'\t'AvgSignal > "$output".csv
 
 # join datasets
 cat "$temp_positive" "$temp_negative" | \
